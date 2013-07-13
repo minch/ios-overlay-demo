@@ -30,14 +30,14 @@
 - (IBAction)viewControllerButtonPressed:(id)sender
 {
     OverlayView *overlayView = [[NSBundle mainBundle] loadNibNamed:@"OverlayView"owner:self options:nil][0];
-    
-    [UIView transitionWithView:self.view
-                      duration:0.5
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        [self.view addSubview:overlayView];
-                    }
-                    completion:nil];
+
+    [self.view addSubview:overlayView];
+	CATransition *animation = [CATransition animation];
+	[animation setDuration:0.5];
+	[animation setType:kCATransitionPush];
+	[animation setSubtype:kCATransitionFromBottom];
+	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+	[[self.view layer] addAnimation:animation forKey:@"OverlayView"];
 }
 
 - (IBAction)navigationControllerButtonPressed:(id)sender
